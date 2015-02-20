@@ -1,0 +1,6 @@
+---
+- name: Install Docker
+  shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh
+  sudo: yes
+- name: Setup Dockercfg file
+  template: src=dockercfg.j2 dest=/etc/.dockercfg

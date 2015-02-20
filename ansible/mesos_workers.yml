@@ -1,0 +1,15 @@
+---  
+- hosts: [mesos_workers]
+  sudo: True
+  pre_tasks:
+    - name: Remove require tty
+      lineinfile: regexp="tty" dest=/etc/sudoers/os_defaults state=absent
+      tags: ['system']
+  roles: 
+    - {
+        role: 'mesos',
+        mesos_containerizers: "docker,mesos",
+        zookeeper_hostnames: "{{ groups.mesos_masters | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}",
+        mesos_install_mode: "slave",
+        tags: ['mesos']
+      }

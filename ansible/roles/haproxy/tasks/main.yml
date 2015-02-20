@@ -1,0 +1,12 @@
+---
+- name: Download haproxy setup script
+  get_url: url={{ install_script_url }} dest={{ install_script_path }}
+- name: Make setup script executable
+  file: name={{install_script_path}} mode=g+x
+- name: Create haproxy config dir
+  file: name=/etc/haproxy-marathon-bridge state=directory
+- name: Configure haproxy
+  template: src=marathons.j2 dest=/etc/haproxy-marathon-bridge/marathons
+- name: Setup cronjobs for haproxy
+  command: "haproxy-marathon-bridge install_haproxy_system"
+  sudo: True

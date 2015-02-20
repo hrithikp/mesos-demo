@@ -1,0 +1,23 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "hrithikp/mesos-demo-drupal",
+      "network": "BRIDGE",
+      "portMappings": [
+        { "containerPort": 80, "hostPort": 0, "servicePort": 1088, "protocol": "tcp" }
+      ]
+    }
+  },
+  "volumes":[],
+  "env":{
+    "MYSQL_ENDPOINT": "hcw1-migration-data.c6rlmgwunk0a.us-east-1.rds.amazonaws.com",
+    "MYSQL_PASSWORD": "C0ac4-ing",
+    "MYSQL_USERNAME": "root",
+    "MYSQL_DATABASE": "demo_drupal"
+  },
+  "id": "demo-drupal",
+  "instances": 1,
+  "cpus": 2,
+  "mem": 2048
+}

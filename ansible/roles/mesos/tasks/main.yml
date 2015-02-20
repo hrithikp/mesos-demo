@@ -1,0 +1,20 @@
+---
+- include: common.yml
+# Here we are using the debian package if debian
+- name: Add apt-key
+  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
+
+- name: Add mesosphere repo
+  apt_repository: repo="deb http://repos.mesosphere.io/ubuntu trusty main" state=present
+
+- name: Install Debian OS packages
+  apt: pkg={{item}} state=present update_cache=yes
+  with_items:
+    - wget
+    - curl
+    - unzip
+    - python-setuptools
+    - python-dev
+    - mesos={{mesos_version}}-1.0.ubuntu1404
+
+- include: mesos.yml

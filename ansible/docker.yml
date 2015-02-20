@@ -1,0 +1,17 @@
+---  
+- hosts: [mesos_workers]
+  sudo: True
+  gather_facts: False
+  tasks:
+    - name: Load docker containers list
+      action: shell docker ps -a -q
+      register: containers
+    - name: Load docker images list
+      action: shell docker images -q
+      register: images
+    - name: Remove docker containers
+      shell: docker rm -f $(docker ps -a -q)
+      when: containers|length
+    - name: Remove docker images
+      shell: docker rmi -f $(docker images -q)
+      when: images|length
